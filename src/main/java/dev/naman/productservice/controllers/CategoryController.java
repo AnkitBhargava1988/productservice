@@ -46,4 +46,10 @@ public class CategoryController {
 
         return categoryService.getProductTitles(uuids);
     }
+
+    @GetMapping
+    public List<String> getCategories(){
+        return categoryService.getCategories();
+    }
+
 }

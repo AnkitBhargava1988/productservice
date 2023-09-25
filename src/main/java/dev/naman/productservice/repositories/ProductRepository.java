@@ -44,4 +44,6 @@ extends JpaRepository<Product, UUID> {
 
 //    @Query("select Product from Product where Product.price.currency = :currency and Product.title = :naman")
 //    List<Product> doSomething(String naman, String currency);
+
+    List<Product> findByCategory_Name(String category);
 }

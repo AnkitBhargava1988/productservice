@@ -3,6 +3,7 @@ package dev.naman.productservice.controllers;
 import dev.naman.productservice.dtos.ExceptionDto;
 import dev.naman.productservice.dtos.GenericProductDto;
 import dev.naman.productservice.exceptions.NotFoundException;
+import dev.naman.productservice.models.Product;
 import dev.naman.productservice.services.ProductService;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
@@ -10,12 +11,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/products")
 public class ProductController {
 //    @Autowired
     // field injection
+    @Qualifier("selfProductServiceImpl")
     private ProductService productService;
     // ....;
     // ...;
@@ -44,7 +47,7 @@ public class ProductController {
     // localhost:8080/products/{id}
     // localhost:8080/products/123
     @GetMapping("{id}")
-    public GenericProductDto getProductById(@PathVariable("id") Long id) throws NotFoundException {
+    public GenericProductDto getProductById(@PathVariable("id") UUID id) throws NotFoundException {
         return productService.getProductById(id);
     }
 
@@ -65,5 +68,10 @@ public class ProductController {
     @PutMapping("{id}")
     public void updateProductById() {
 
+    }
+
+    @GetMapping("/category/{category}")
+    public List<Product> getProductsByCategory(@PathVariable("category") String category){
+        return productService.getProductByCategories(category);
     }
 }

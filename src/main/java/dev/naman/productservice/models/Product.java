@@ -1,5 +1,7 @@
 package dev.naman.productservice.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import lombok.*;
@@ -11,6 +13,7 @@ import org.hibernate.annotations.FetchMode;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Product extends BaseModel {
 
     private String title;
@@ -24,10 +27,12 @@ public class Product extends BaseModel {
     // => Ans:    m : 1
     @ManyToOne(cascade = {CascadeType.PERSIST})
     @JoinColumn(name = "category")
+    @Fetch(FetchMode.JOIN)
+    @JsonBackReference
     private Category category;
 
     @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, fetch = FetchType.LAZY)
-//    @Fetch(FetchMode.JOIN)
+//    @Fetch(FetchMode.SUBSELECT)
     private Price price;
 //    private double price;
 }
